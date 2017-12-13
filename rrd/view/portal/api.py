@@ -157,3 +157,38 @@ def api_group_hosts_json(grp_name):
     names = [v.hostname for v in vs]
     return jsonify(msg='', data=names)
 
+@app.route('/api/host/query')
+def api_host_query():
+    q = request.args.get('query', '').strip()
+    limit = int(request.args.get('limit', '10'))
+    ts, _ = Host.query2(1, limit, q)
+    ts = [t.to_json() for t in ts]
+    return jsonify(data=ts)
+
+@app.route('/api/host/<host_id>')
+def api_host_get(host_id):
+    host_id = int(host_id)
+    t = Host.get(host_id)
+    if not t:
+        return jsonify(msg='no such host')
+
+    return jsonify(msg='', data=t.to_json())
+
+@app.route('/api/group/query')
+def api_group_query():
+    q = request.args.get('query', '').strip()
+    limit = int(request.args.get('limit', '10'))
+    ts, _ = HostGroup.query(1, limit, q)
+    ts = [t.to_json() for t in ts]
+    return jsonify(data=ts)
+
+@app.route('/api/group/<group_id>')
+def api_group_get(group_id):
+    group_id = int(group_id)
+    t = HostGroup.get(group_id)
+    if not t:
+        return jsonify(msg='no such group')
+
+    return jsonify(msg='', data=t.to_json())
+
+

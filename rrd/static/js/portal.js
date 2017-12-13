@@ -673,3 +673,160 @@ function alarm_case_event_batch_rm() {
         return false;
     });
 }
+
+function query_ignore(){
+    var query = $.trim($("#query").val());
+    var mine = document.getElementById('mine').checked ? 1 : 0;
+    window.location.href = '/portal/ignore?q=' + query + '&mine=' + mine;
+}
+
+function create_ignore() {
+    var ignore_name = $.trim($("#ignore_name").val());
+    $.post('/portal/ignore/add', {'ignore_name': ignore_name}, function (json) {
+        handle_quietly(json, function () {
+            window.location.reload();
+        });
+    }, "json");
+}
+
+function edit_ignore(ignore_id, ignore_name) {
+    layer.prompt({title: 'edit the expression:', val: ignore_name, length: 255}, function (val, index, elem) {
+        $.post('/portal/ignore/update/' + ignore_id, {'new_name': val}, function (json) {
+            handle_quietly(json, function () {
+                location.reload();
+            });
+        }, "json");
+    })
+}
+
+function delete_ignore(ignore_id) {
+    my_confirm('确定要删除？？？', ['确定', '取消'], function () {
+        $.getJSON('/portal/ignore/delete/' + ignore_id, {}, function (json) {
+            handle_quietly(json, function () {
+                location.reload();
+            });
+        });
+    }, function () {
+        return false;
+    });
+}
+
+function ignore_unbind_host(host_id, ignore_id) {
+    my_confirm('确定要解除绑定关系？', ['确定', '取消'], function () {
+        $.getJSON('/portal/ignore/unbind/host', {'host_id': host_id, 'ignore_id': ignore_id}, function (json) {
+            handle_quietly(json, function () {
+                location.reload();
+            });
+        })
+    }, function () {
+        return false;
+    });
+}
+
+function bind_host(ignore_id) {
+    var host_id = $.trim($("#host_id").val());
+    $.getJSON('/portal/ignore/bind/host', {'ignore_id': ignore_id, 'host_id': host_id}, function (json) {
+        handle_quietly(json, function () {
+            location.reload();
+        })
+    });
+}
+
+function make_select2_for_host(selector) {
+    $(selector).select2({
+        placeholder: "input endpoint name",
+        allowClear: true,
+        quietMillis: 100,
+        minimumInputLength: 2,
+        id: function (obj) {
+            return obj.id;
+        },
+        ajax: {
+            url: "/api/host/query",
+            dataType: 'json',
+            data: function (term, page) {
+                return {
+                    query: term,
+                    limit: 10
+                };
+            },
+            results: function (json, page) {
+                return {results: json.data};
+            }
+        },
+
+        initSelection: function (element, callback) {
+            var host_id = $(element).val();
+            $.getJSON("/api/host/" + host_id, function (json) {
+                callback(json.data);
+            });
+        },
+
+        formatResult: function (obj) {
+            return obj.name
+        },
+        formatSelection: function (obj) {
+            return obj.name
+        }
+    });
+}
+
+function ignore_unbind_group(group_id, ignore_id) {
+    my_confirm('确定要解除绑定关系？', ['确定', '取消'], function () {
+        $.getJSON('/portal/ignore/unbind/group', {'group_id': group_id, 'ignore_id': ignore_id}, function (json) {
+            handle_quietly(json, function () {
+                location.reload();
+            });
+        })
+    }, function () {
+        return false;
+    });
+}
+
+function bind_group(ignore_id) {
+    var group_id = $.trim($("#group_id").val());
+    $.getJSON('/portal/ignore/bind/group', {'group_id': group_id, 'ignore_id': ignore_id}, function (json) {
+        handle_quietly(json, function () {
+            location.reload();
+        })
+    });
+}
+
+function make_select2_for_group(selector) {
+    $(selector).select2({
+        placeholder: "input group name",
+        allowClear: true,
+        quietMillis: 100,
+        minimumInputLength: 2,
+        id: function (obj) {
+            return obj.id;
+        },
+        ajax: {
+            url: "/api/group/query",
+            dataType: 'json',
+            data: function (term, page) {
+                return {
+                    query: term,
+                    limit: 10
+                };
+            },
+            results: function (json, page) {
+                return {results: json.data};
+            }
+        },
+
+        initSelection: function (element, callback) {
+            var group_id = $(element).val();
+            $.getJSON("/api/group/" + group_id, function (json) {
+                callback(json.data);
+            });
+        },
+
+        formatResult: function (obj) {
+            return obj.name
+        },
+        formatSelection: function (obj) {
+            return obj.name
+        }
+    });
+}

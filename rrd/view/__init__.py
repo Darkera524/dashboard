@@ -77,5 +77,7 @@ def app_before():
         g.nav_menu = "p_nodata"
     elif path.startswith("/portal/alarm-dash"):
         g.nav_menu = "p_alarm-dash"
+    elif path.startswith("/portal/ignore"):
+        g.nav_menu = "p_ignore"
     else:
         g.nav_menu = ""

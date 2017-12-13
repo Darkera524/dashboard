@@ -79,3 +79,18 @@ class Host(Bean):
         if cls.exists('hostname=%s', [hostname]):
             return
         cls.insert({'hostname': hostname})
+
+    ## 不依赖group_id的查询，与其他model的query一致
+    @classmethod
+    def query2(cls, page, limit, query):
+        where = ''
+        params = []
+
+        if query:
+            where += ' and ' if where else ''
+            where += 'hostname like %s'
+            params.append('%' + query + '%')
+
+        vs = cls.select_vs(where=where, params=params, page=page, limit=limit, order='hostname')
+        total = cls.total(where, params)
+        return vs, total
