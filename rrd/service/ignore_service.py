@@ -5,9 +5,9 @@ log = logging.getLogger(__file__)
 
 def delete_ignore(ignore_id=None):
     try:
-        cursor = db.execute('delete from ignore where id = %s', [ignore_id])
-        db.execute('delete from ign_host where ignore_id = %s', [ignore_id], cursor=cursor)
-        db.execute('delete from ign_group where ignore_id = %s', [ignore_id], cursor=cursor)
+        cursor = db.execute('delete from `ignore` where id = %s', [ignore_id])
+        db.execute('delete from ignore_host where ignore_id = %s', [ignore_id], cursor=cursor)
+        db.execute('delete from ignore_group where ignore_id = %s', [ignore_id], cursor=cursor)
         db.commit()
         return ''
     except Exception, e:

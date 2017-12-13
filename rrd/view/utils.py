@@ -124,8 +124,9 @@ def ldap_login_user(name, password):
 
     bind_dn = config.LDAP_BINDDN_FMT
     base_dn = config.LDAP_BASE_DN
+    bind_pw = config.LDAP_PASSWORD
     try:
-        bind_dn = config.LDAP_BINDDN_FMT %name
+        bind_dn = config.LDAP_BINDDN_FMT
     except TypeError: pass
 
     search_filter = config.LDAP_SEARCH_FMT
@@ -150,7 +151,7 @@ def ldap_login_user(name, password):
                 cli.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, config.LDAP_TLS_REQUIRE_CERT)
             if config.LDAP_TLS_CIPHER_SUITE:
                 cli.set_option(ldap.OPT_X_TLS_CIPHER_SUITE, config.LDAP_TLS_CIPHER_SUITE)
-        cli.simple_bind_s(bind_dn, password)
+        cli.simple_bind_s(bind_dn, bind_pw)
         result = cli.search_s(base_dn, ldap.SCOPE_SUBTREE, search_filter, config.LDAP_ATTRS)
         log.debug("ldap result: %s" % result)
         d = result[0][1]
@@ -164,7 +165,7 @@ def ldap_login_user(name, password):
             phone = d['telephoneNumber'] and d['telephoneNumber'][0] or ""
         else:
             phone = ""
-    
+
         return {
                 "name": name,
                 "password": password,

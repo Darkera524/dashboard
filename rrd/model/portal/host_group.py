@@ -31,6 +31,14 @@ class HostGroup(Bean):
         self.create_user = create_user
         self.come_from = come_from
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.grp_name,
+            'create_user': self.create_user,
+            'come_from': self.come_from,
+        }
+
     #TODO:admin should manage the group
     def writable(self, user):
         #user can be str or User obj

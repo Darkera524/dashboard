@@ -28,6 +28,14 @@ class Host(Bean):
         self.maintain_begin = maintain_begin
         self.maintain_end = maintain_end
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.hostname,
+            'maintain_begin': self.maintain_begin,
+            'maintain_end': self.maintain_end,
+        }
+
     @classmethod
     def query(cls, page, limit, query, maintaining, group_id):
         where = 'id in (select host_id from grp_host where grp_id = %s)'

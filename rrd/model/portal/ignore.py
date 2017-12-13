@@ -17,6 +17,8 @@
 __author__ = "Dake Wang"
 
 from .bean import Bean
+from rrd.model.user import User
+from rrd.config import MAINTAINERS
 
 class Ignore(Bean):
     _tbl = 'ignore'
@@ -58,4 +60,17 @@ class Ignore(Bean):
         if cls.column('id', where='ignore_name = %s', params=[ignore_name]):
             return -1
 
-        return cls.insert({'ignore_name': ignore_name, 'create_user': user_name})
+        return cls.insert({'ignore_name': ignore_name, 'creator': user_name})
+
+    def writable(self, user):
+        # user can be str or User obj
+        if isinstance(user, str):
+            user = User.get_by_name(user)
+
+        if not user:
+            return False
+
+        if self.creator == user.name or user.name in MAINTAINERS or user.is_admin() or user.is_root():
+            return True
+
+        return False
