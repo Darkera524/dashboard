@@ -7,13 +7,20 @@
 
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading" style="padding-left: 8px;">hosts</div>
+        <div class="panel-heading" style="padding-left: 8px;">
+            {% for prod in data.products %}
+            <a href="{{ url_for('server_info', product=prod) }}">{{ prod }}</a>
+            <span class="cut-line">?</span>
+            {% endfor %}
+        </div>
 
         <!-- Table -->
         <table class="table table-hover table-bordered table-striped" style="margin-bottom: 0px; margin-top: 0px;">
             <thead>
             <tr>
                 <th>host</th>
+                <th>falcon-ip</th>
+                <th>god-ip</th>
                 <th>status</th>
             </tr>
             </thead>
@@ -22,6 +29,12 @@
                 <tr>
                     <td>
                         {{ v.hostname }}
+                    </td>
+                    <td>
+                        {{ v.ip }}
+                    </td>
+                    <td>
+                        {{ v.ips }}
                     </td>
                     <td>
                         {{ v.status }}
