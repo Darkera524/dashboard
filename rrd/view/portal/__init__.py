@@ -29,5 +29,6 @@ __all__ = [
         "template",
         "alarm",
         "alert_link",
-        "Ignore",
+        "ignore",
+        "god",
         ]

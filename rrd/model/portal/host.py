@@ -102,3 +102,12 @@ class Host(Bean):
         vs = cls.select_vs(where=where, params=params, page=page, limit=limit, order='hostname')
         total = cls.total(where, params)
         return vs, total
+
+    @classmethod
+    def all_host_ip_dict(cls):
+        rows = db.query_all('SELECT id, hostname, ip FROM host')
+        ret = {}
+        if rows:
+            for row in rows:
+                ret[row[1]] = row[2]
+        return ret
