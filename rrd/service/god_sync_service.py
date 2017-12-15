@@ -44,7 +44,7 @@ def sync_server():
         finally:
             cursor and cursor.close()
 
-    return "success"
+    return ""
 
 
 if __name__ == '__main__':

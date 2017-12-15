@@ -43,7 +43,8 @@ class God_host(Bean):
         ret = {}
         if rows:
             for row in rows:
-                ret[row[0]] = row[1]
+                ret[row[0]] = row[1].strip()
+        return ret
 
     @classmethod
     def all_product(cls):
@@ -53,3 +54,4 @@ class God_host(Bean):
         if rows:
             for row in rows:
                 ret.append(row[0])
+        return ret

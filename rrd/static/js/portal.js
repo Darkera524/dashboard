@@ -830,3 +830,11 @@ function make_select2_for_group(selector) {
         }
     });
 }
+
+function sync_with_god(){
+    $.getJSON('/god/god_sync', {}, function (json) {
+        handle_quietly(json, function () {
+            location.reload();
+        })
+    });
+}

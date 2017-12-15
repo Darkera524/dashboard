@@ -5,6 +5,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/select2-bootstrap.css') }}"/>
     <script type="text/javascript" src="{{ url_for('static', filename='select2/select2.min.js') }}"></script>
 
+    <div class="form-inline mb20" role="form">
+        <div class="form-group">
+            <button type="button" onclick="sync_with_god();" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span>
+                Sync With God
+            </button>
+        </div>
+    </div>
+
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading" style="padding-left: 8px;">
@@ -34,7 +43,9 @@
                         {{ v.ip }}
                     </td>
                     <td>
-                        {{ v.ips }}
+                        {% for ip in v.ips %}
+                            <p>{{ ip }}</p>
+                        {% endfor %}
                     </td>
                     <td>
                         {{ v.status }}

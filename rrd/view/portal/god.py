@@ -32,11 +32,11 @@ def server_info():
     for i in product_host_dict:
         if i in dict:
             status = detect_status(dict[i])
-            ins = God(i, dict[i], product_host_dict[i], status)
+            ins = God(i, dict[i], product_host_dict[i].split(","), status)
             ret.append(ins)
         else:
             status = "not be installed"
-            ins = God(i, "", product_host_dict[i], status)
+            ins = God(i, "", product_host_dict[i].split(","), status)
             ret.append(ins)
 
     return render_template(
