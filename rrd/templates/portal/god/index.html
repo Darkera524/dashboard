@@ -19,7 +19,7 @@
         <div class="panel-heading" style="padding-left: 8px;">
             {% for prod in data.products %}
             <a href="{{ url_for('server_info', product=prod) }}">{{ prod }}</a>
-            <span class="cut-line">?</span>
+            <span class="cut-line">|</span>
             {% endfor %}
         </div>
 

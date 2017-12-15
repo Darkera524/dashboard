@@ -37,14 +37,14 @@
                 <td>{{ v.creator }}</td>
                 <td>
                     <a href="{{ url_for('ignore_host_list', ignore_id=v.id) }}">hosts</a>
-                    <span class="cut-line">?</span>
+                    <span class="cut-line">|</span>
                     <a href="{{ url_for('ignore_group_list', ignore_id=v.id) }}">groups</a>
                     {% if v.writable(g.user) %}
-                        <span class="cut-line">?</span>
+                        <span class="cut-line">|</span>
                         <a href="javascript:edit_ignore('{{ v.id }}', '{{ v.ignore_name }}');" style="text-decoration: none;">
                             <span class="glyphicon glyphicon-edit orange"></span>
                         </a>
-                        <span class="cut-line">?</span>
+                        <span class="cut-line">|</span>
                         <a href="javascript:delete_ignore('{{ v.id }}');" style="text-decoration: none;">
                             <span class="glyphicon glyphicon-trash orange"></span>
                         </a>
