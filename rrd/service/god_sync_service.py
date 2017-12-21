@@ -2,6 +2,10 @@
 
 __author__ = 'Dake Wang'
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 import requests
 import json
 from rrd.store import db
@@ -29,16 +33,16 @@ def sync_server():
         product = item["_source"]["asset"]["product"]
         hostname = item["_source"]["logical"]["host_name"]
         lev = "product"
-        if item["_source"]["asset"]["level"] == "test":
+        if item["_source"]["asset"]["level"] == "测试":
             lev = "test"
         idc = ""
-        if item["_source"]["asset"]["idc"] == "TianTan":
+        if item["_source"]["asset"]["idc"] == "铜牛天坛机房":
             idc = "TianTan"
-        elif item["_source"]["asset"]["idc"] == "GuoMao":
+        elif item["_source"]["asset"]["idc"] == "铜牛国贸机房":
             idc = "GuoMao"
-        elif item["_source"]["asset"]["idc"] == "YiZhuang":
+        elif item["_source"]["asset"]["idc"] == "铁通亦庄机房":
             idc = "YiZhuang"
-        elif item["_source"]["asset"]["idc"] == "ShangHai":
+        elif item["_source"]["asset"]["idc"] == "上海SH5机房":
             idc = "ShangHai"
         ip_list = item["_source"]["logical"]["ip_list"]
         ips = []
