@@ -20,12 +20,14 @@ from rrd.store import db
 
 class God_host(Bean):
     _tbl = "god"
-    _cols = "id, product, hostname, ips"
+    _cols = "id, product, hostname, lev, idc, ips"
 
-    def __init__(self, _id, product, hostname, ips):
+    def __init__(self, _id, product, hostname, lev, idc, ips):
         self.id = _id
         self.product = product
         self.hostname = hostname
+        self.lev = lev
+        self.idc = idc
         self.ips = ips
 
     def to_json(self):
@@ -33,6 +35,8 @@ class God_host(Bean):
             "id": self.id,
             "product": self.product,
             "hostname": self.hostname,
+            "lev": self.lev,
+            "idc": self.idc,
             "ips": self.ips,
         }
 
@@ -54,4 +58,24 @@ class God_host(Bean):
         if rows:
             for row in rows:
                 ret.append(row[0])
+        return ret
+
+    @classmethod
+    def lev_host_dict(cls, lev):
+        sql = "SELECT hostname,ips FROM god WHERE lev = '" + lev + "'"
+        rows = db.query_all(sql)
+        ret = {}
+        if rows:
+            for row in rows:
+                ret[row[0]] = row[1].strip()
+        return ret
+
+    @classmethod
+    def idc_host_dict(cls, idc):
+        sql = "SELECT hostname,ips FROM god WHERE idc = '" + idc + "'"
+        rows = db.query_all(sql)
+        ret = {}
+        if rows:
+            for row in rows:
+                ret[row[0]] = row[1].strip()
         return ret

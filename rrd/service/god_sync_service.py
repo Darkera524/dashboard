@@ -28,6 +28,18 @@ def sync_server():
     for item in all_server:
         product = item["_source"]["asset"]["product"]
         hostname = item["_source"]["logical"]["host_name"]
+        lev = "product"
+        if item["_source"]["asset"]["level"] == "test":
+            lev = "test"
+        idc = ""
+        if item["_source"]["asset"]["idc"] == "TianTan":
+            idc = "TianTan"
+        elif item["_source"]["asset"]["idc"] == "GuoMao":
+            idc = "GuoMao"
+        elif item["_source"]["asset"]["idc"] == "YiZhuang":
+            idc = "YiZhuang"
+        elif item["_source"]["asset"]["idc"] == "ShangHai":
+            idc = "ShangHai"
         ip_list = item["_source"]["logical"]["ip_list"]
         ips = []
         for ip in ip_list:
@@ -35,7 +47,7 @@ def sync_server():
         ip_str = ",".join(ips)
 
         try:
-            cursor = db.execute("insert into god(product, hostname, ips) values (%s, %s, %s)" , ((product,hostname,ip_str)))
+            cursor = db.execute("insert into god(product, hostname, lev, idc, ips) values (%s, %s, %s, %s, %s)" , ((product,hostname,lev,idc,ip_str)))
             db.commit()
         except Exception, e:
             log.error(e)

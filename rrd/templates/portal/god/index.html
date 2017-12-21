@@ -23,6 +23,23 @@
             {% endfor %}
         </div>
 
+        <div class="panel-heading" style="padding-left: 8px;">
+            <a href="{{ url_for('lev_info', lev='product') }}">生产</a>
+            <span class="cut-line">|</span>
+            <a href="{{ url_for('lev_info', lev='test') }}">测试</a>
+        </div>
+
+        <div class="panel-heading" style="padding-left: 8px;">
+            <a href="{{ url_for('idc_info', idc='TianTan') }}">铜牛天坛机房</a>
+            <span class="cut-line">|</span>
+            <a href="{{ url_for('idc_info', idc='GuoMao') }}">铜牛国贸机房</a>
+            <span class="cut-line">|</span>
+            <a href="{{ url_for('idc_info', idc='YiZhuang') }}">铁通亦庄机房</a>
+            <span class="cut-line">|</span>
+            <a href="{{ url_for('idc_info', idc='ShangHai') }}">上海SH5机房</a>
+        </div>
+
+
         <!-- Table -->
         <table class="table table-hover table-bordered table-striped" style="margin-bottom: 0px; margin-top: 0px;">
             <thead>
